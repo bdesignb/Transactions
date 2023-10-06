@@ -1,0 +1,98 @@
+{
+  "users": [
+    {
+      "email": "admin@kireygroup.com",
+      "password": "Admin@kireygroup2023",
+      "fullName": "Admin",
+      "accountAmount": 980,
+      "id": 1
+    },
+    {
+      "email": "john@kireygroup.com",
+      "password": "John@kireygroup2023",
+      "fullName": "John Smith",
+      "accountAmount": 450,
+      "id": 2
+    },
+    {
+      "email": "emma@kireygroup.com",
+      "password": "Emma@kireygroup2023",
+      "fullName": "Emma Johnson",
+      "accountAmount": 770,
+      "id": 3
+    },
+    {
+      "email": "alex@kireygroup.com",
+      "password": "Alex@kireygroup2023",
+      "fullName": "Alex Miller",
+      "accountAmount": 510,
+      "id": 4
+    }
+  ],
+  "transactions": [
+    {
+      "id": 1,
+      "userId": 1,
+      "purchasedItem": "Admin Item 1",
+      "category": "Sport",
+      "date": "2023-10-01T11:09:29.000Z",
+      "amountSpent": 20
+    },
+    {
+      "id": 2,
+      "userId": 2,
+      "purchasedItem": "John Item 1",
+      "category": "Clothing",
+      "date": "2023-10-03T05:38:09.000Z",
+      "amountSpent": 30
+    },
+    {
+      "id": 3,
+      "userId": 2,
+      "purchasedItem": "John Item 2",
+      "category": "Accessories",
+      "date": "2023-10-06T05:38:44.320Z",
+      "amountSpent": 10
+    },
+    {
+      "id": 4,
+      "userId": 2,
+      "purchasedItem": "John Item 3",
+      "category": "Accessories",
+      "date": "2023-10-06T05:38:55.702Z",
+      "amountSpent": 10
+    },
+    {
+      "id": 5,
+      "userId": 3,
+      "purchasedItem": "Emma Item 1",
+      "category": "Accessories",
+      "date": "2023-10-02T08:40:28.000Z",
+      "amountSpent": 10
+    },
+    {
+      "id": 6,
+      "userId": 3,
+      "purchasedItem": "Emma Item 2",
+      "category": "Clothing",
+      "date": "2023-10-06T05:40:56.438Z",
+      "amountSpent": 20
+    },
+    {
+      "id": 7,
+      "userId": 4,
+      "purchasedItem": "Alex Item 1",
+      "category": "Electronics",
+      "date": "2023-10-06T05:43:26.916Z",
+      "amountSpent": 50
+    },
+    {
+      "id": 8,
+      "userId": 4,
+      "purchasedItem": "Alex Item 2",
+      "category": "Sport",
+      "date": "2023-10-06T05:43:40.246Z",
+      "amountSpent": 40
+    }
+  ]
+}

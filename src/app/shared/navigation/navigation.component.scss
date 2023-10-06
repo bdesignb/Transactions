@@ -1,0 +1,40 @@
+::ng-deep {
+  .p-menubar {
+    color: #495057;
+    font-size: 15px;
+    border: 0px;
+    border-radius: 0px;
+    box-shadow: 0 1px 4px rgba(50, 50, 50, 0.2);
+    background-color: white;
+  }
+
+  @media screen and (min-width: 960px) {
+    .p-menubar {
+      position: relative;
+      padding: 1.2rem 4rem;
+
+      p-menubarsub {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        right: 3rem;
+      }
+    }
+  }
+
+  @media screen and (max-width: 960px) {
+    .p-menubar {
+      padding: 1.2rem 2rem;
+
+      .p-menubar-button {
+        position: absolute;
+        right: 2rem;
+      }
+    }
+  }
+}
+
+.logo {
+  cursor: pointer;
+}

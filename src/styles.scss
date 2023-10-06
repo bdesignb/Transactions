@@ -1,1 +1,108 @@
-/* You can add global styles to this file, and also import other style files */
+html {
+  font-size: 13px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  font-weight: normal;
+  color: var(--text-color);
+  background-color: var(--surface-ground);
+}
+
+.mb-4 {
+  margin-bottom: 1.5rem !important;
+}
+
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+.mr-2 {
+  margin-right: 0.5rem !important;
+}
+
+.mt-2 {
+  margin-top: 0.5rem !important;
+}
+
+.gap-2 {
+  gap: 0.5rem !important;
+}
+
+h1,
+h2 {
+  margin: 1.5rem 0 1rem;
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  color: inherit;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+.card {
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(50, 50, 50, 0.2);
+  padding: 2rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.section__content {
+  padding: 2rem 4rem;
+
+  .section__intro {
+    padding-bottom: 1rem;
+  }
+}
+
+.field {
+  margin-bottom: 1rem;
+
+  label {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.logo {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+  padding: 0.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f;
+  width: 39px;
+  height: 39px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.dialog__footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15rem;
+  margin-top: 2rem;
+}
+
+.categories__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media screen and (max-width: 960px) {
+  .section__content {
+    padding: 2rem 2rem;
+  }
+}

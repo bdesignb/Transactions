@@ -1,0 +1,181 @@
+<!-- Login -->
+<div class="login__container">
+  <div class="login__left">
+    <div>
+      <span class="logo">T</span>
+      <h1>Efficiently handle financial transactions</h1>
+      <p>Providing seamless options for addition and removal.</p>
+    </div>
+  </div>
+  <div class="login__right">
+    <div class="card card__login">
+      <h2>Sign in</h2>
+
+      <form #loginForm="ngForm">
+        <div class="p-fluid grid">
+
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" name="emailLogin"
+              [(ngModel)]="user.email"
+              #email="ngModel"
+              class="p-inputtext"
+              (ngModelChange)="errorMessage = ''"
+              pattern="{{ emailPattern.source }}"
+              required
+              autocomplete="off" />
+            <small *ngIf="email.invalid && (email.dirty || email.touched)" id="email-help" class="p-error">
+              <ng-container *ngIf="email.errors?.['required']">Email is required.</ng-container>
+              <ng-container *ngIf="email.errors?.['pattern']">Please enter a valid email address.</ng-container>
+            </small>
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <p-password name="password"
+              [(ngModel)]="user.password"
+              #password="ngModel"
+              (ngModelChange)="errorMessage = ''"
+              [toggleMask]="true"
+              required>
+            </p-password>
+            <small *ngIf="password.invalid && (password.dirty || password.touched)" id="password-help" class="p-error">
+              <ng-container *ngIf="password.errors?.['required']">Password is required.</ng-container>
+              <ng-container *ngIf="password.errors?.['pattern']">Wrong password format.</ng-container>
+            </small>
+          </div>
+
+          <div class="field">
+            <small *ngIf="errorMessage" class="p-error">{{ errorMessage }}</small>
+          </div>
+
+          <div class="field">
+            <button pButton type="button" label="Sign in"
+              class="p-button-primary"
+              [disabled]="!loginForm.valid"
+              name="signIn"
+              (click)="loginUser()">
+            </button>
+            <p-divider align="center"><span>OR</span></p-divider>
+            <button pButton type="button" label="Sign up"
+              class="p-button-success"
+              name="signUp"
+              (click)="signUp(loginForm)">
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Sign up dialog -->
+<p-dialog [(visible)]="signUpDialog"
+  [style]="{width: '450px'}"
+  header="Sign Up"
+  [modal]="true"
+  styleClass="p-fluid">
+
+  <form #signUpForm="ngForm">
+    <div class="p-fluid grid">
+      <div class="field">
+        <label for="fullName">Full name</label>
+        <input type="text" name="fullName"
+          [(ngModel)]="signUpUser.fullName"
+          #fullName="ngModel"
+          class="p-inputtext"
+          pattern="^[a-zA-Z ]+$"
+          required />
+        <small *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)" id="fullName-help" class="p-error">
+          <ng-container *ngIf="fullName.errors?.['required']">Full name is required.</ng-container>
+          <ng-container *ngIf="fullName.errors?.['pattern']">Please enter a valid full name, only letters are allowed.</ng-container>
+        </small>
+      </div>
+
+      <div class="field">
+        <label for="signUpEmail">Email</label>
+        <input type="email" name="signUpEmail"
+          class="p-inputtext"
+          [(ngModel)]="signUpUser.email"
+          #signUpEmail="ngModel"
+          (ngModelChange)="checkEmailAvailability(signUpEmail.value)"
+          pattern="{{ emailPattern.source }}"
+          required />
+
+        <small *ngIf="signUpEmail.invalid && (signUpEmail.dirty || signUpEmail.touched)" class="p-error">
+          <ng-container *ngIf="signUpEmail.errors?.['required']">Email is required.</ng-container>
+          <ng-container *ngIf="signUpEmail.errors?.['pattern']">Please enter a valid email address.</ng-container>
+        </small>
+        <small class="p-error" *ngIf="emailAvailable === false">Email already exist.</small>
+      </div>
+
+      <div class="field">
+        <label for="signUpPassword">Password</label>
+        <p-password name="signUpPassword"
+          [(ngModel)]="signUpUser.password"
+          #signUpPassword="ngModel"
+          [toggleMask]="true"
+          [pattern]="passwordPattern.source"
+          required>
+          <ng-template pTemplate="header">
+            <h6>Pick a password</h6>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <p-divider></p-divider>
+            <p class="mt-2">Suggestions</p>
+            <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+              <li>At least one uppercase</li>
+              <li>At least one special character</li>
+              <li>At least one numeric</li>
+              <li>Minimum 5 characters</li>
+            </ul>
+          </ng-template>
+        </p-password>
+        <small *ngIf="signUpPassword.invalid && (signUpPassword.dirty || signUpPassword.touched)" class="p-error">
+          <ng-container *ngIf="signUpPassword.errors?.['required']">Password is required.</ng-container>
+          <ng-container *ngIf="signUpPassword.errors?.['pattern']">Wrong password format.</ng-container>
+        </small>
+      </div>
+
+      <div class="field">
+        <label for="accountAmount">Account amount</label>
+        <p-inputNumber name="accountAmount"
+          mode="currency"
+          currency="USD"
+          locale="en-US"
+          [(ngModel)]="signUpUser.accountAmount"
+          #accountAmount="ngModel"
+          [min]="0" mode="decimal"
+          [minFractionDigits]="0"
+          [useGrouping]="false"
+          [required]="true">
+        </p-inputNumber>
+
+        <small *ngIf="accountAmount.invalid && (accountAmount.dirty || accountAmount.touched)" class="p-error">
+          <ng-container *ngIf="accountAmount.errors?.['required']">Account amount is required.</ng-container>
+        </small>
+      </div>
+
+      <div class="field">
+        <div class="field">
+          <div class="field">
+            <button pButton type="button" label="Sign in"
+              class="p-button-success"
+              [disabled]="!signUpForm.valid || !emailAvailable"
+              name="signIn"
+              (click)="saveUser()">
+            </button>
+          </div>
+
+          <div class="field">
+            <button pButton type="button" label="Cancel"
+              class="p-button-primary p-button-outlined"
+              name="cancel"
+              (click)="resetSignUpForm(signUpForm)">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</p-dialog>

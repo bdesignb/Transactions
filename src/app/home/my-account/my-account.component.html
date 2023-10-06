@@ -1,0 +1,57 @@
+<p-toast></p-toast>
+
+<section class="section__content">
+  <div class="section__intro">
+    <h1>My Account</h1>
+    <p>Take charge of your account by efficiently managing and monitoring your account balance.</p>
+  </div>
+
+  <div class="card">
+    <h2>
+      Welcome {{user.fullName}}, your current balance is:
+      <span class="success-tag">$ {{ user.accountAmount }}</span>
+    </h2>
+
+    <button pButton type="button"
+      (click)="showDialog()"
+      label="Change amount"
+      icon="pi pi-pencil"
+       class="p-button">
+    </button>
+
+    <!-- Dialog -->
+    <p-dialog header="Change amount"
+      [(visible)]="displayDialog"
+      [modal]="true"
+      [draggable]="false"
+      [resizable]="false">
+
+        <p-inputNumber
+          name="amount"
+          [(ngModel)]="accountAmount"
+          inputId="currency-us"
+          mode="currency"
+          currency="USD"
+          ocale="en-US">
+        </p-inputNumber>
+
+        <ng-template pTemplate="footer">
+          <button pButton type="button"
+            label="Save"
+            icon="pi pi-check"
+            class="p-button mr-2"
+            (click)="updateAccountBalance()"
+            [disabled]="!accountAmount">
+          </button>
+
+          <button pButton type="button"
+            label="Cancel"
+            icon="pi pi-times"
+            class="p-button-outlined"
+            (click)="displayDialog=false">
+          </button>
+        </ng-template>
+    </p-dialog>
+
+  </div>
+</section>

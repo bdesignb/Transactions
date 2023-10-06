@@ -1,0 +1,164 @@
+<p-toast></p-toast>
+
+<section class="section__content">
+
+  <div class="section__intro">
+    <h1>Transactions</h1>
+    <p>Efficiently handle financial transactions, providing seamless options for addition and removal.</p>
+  </div>
+
+  <div class="card">
+    <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+        <button pButton pRipple
+          label="Add transaction"
+          (click)="addTransaction()"
+          icon="pi pi-plus"
+          class="p-button-success mr-2">
+        </button>
+      </ng-template>
+    </p-toolbar>
+
+    <p-table #dt [value]="transactions"
+      [tableStyle]="{'min-width': '75rem'}"
+      [rowHover]="true"
+      dataKey="id">
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+          <h5 class="m-0">Manage Transactions</h5>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Date of purchase</th>
+          <th>Item purchased</th>
+          <th>Item category</th>
+          <th style="min-width:10rem">Amount spent</th>
+          <th></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-transaction>
+        <tr>
+          <td>{{ transaction.date | date: 'dd.MM.yyyy HH:mm' }}</td>
+          <td>{{ transaction.purchasedItem }}</td>
+          <td>{{ transaction.category}}</td>
+          <td>{{ transaction.amountSpent !== undefined ? '$' + transaction.amountSpent : '0' }}</td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil"
+              class="p-button-rounded p-button-success mr-2"
+              (click)="editTransaction(transaction)">
+            </button>
+            <button pButton pRipple icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteTransaction(transaction)">
+            </button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          In total there {{ transactions.length === 1 ? 'is' : 'are' }}
+          {{ transactions ? transactions.length : 0 }} {{ transactions.length === 1 ? 'transaction' : 'transactions' }}.
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog [(visible)]="transactionDialog"
+    [style]="{width: '450px'}"
+    [header]="transaction.id !== 0 ? 'Update Transaction' : 'Add Transaction'"
+    [modal]="true"
+    styleClass="p-fluid">
+
+    <form #transactionForm="ngForm">
+      <div class="field">
+        <label for="purchasedItem">Item purchased</label>
+        <input pInputText type="text"
+          name="purchasedItem"
+          [(ngModel)]="transaction.purchasedItem"
+          required autofocus />
+      </div>
+
+      <div class="field">
+        <label class="mb-3">Item category</label>
+        <div class="categories__grid">
+          <div class="field-radiobutton">
+            <p-radioButton id="category1" name="category1" [value]="Category.Accessories"
+              [(ngModel)]="transaction.category"></p-radioButton>
+            <label for="category1"> {{ Category.Accessories }} </label>
+          </div>
+          <div class="field-radiobutton">
+            <p-radioButton id="category2" name="category2" [value]="Category.Clothing"
+              [(ngModel)]="transaction.category"></p-radioButton>
+            <label for="category2"> {{ Category.Clothing }} </label>
+          </div>
+          <div class="field-radiobutton">
+            <p-radioButton id="category3" name="category3" [value]="Category.Electronics"
+              [(ngModel)]="transaction.category"></p-radioButton>
+            <label for="category3"> {{ Category.Electronics }} </label>
+          </div>
+          <div class="field-radiobutton">
+            <p-radioButton id="category4" name="category4" [value]="Category.Sport"
+              [(ngModel)]="transaction.category"></p-radioButton>
+            <label for="category4"> {{ Category.Sport }} </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="date">Time and date</label>
+        <p-calendar name="date"
+          [(ngModel)]="transaction.date"
+          [showTime]="true"
+          dateFormat="dd.mm.yy"
+          appendTo="body"
+          [required]="true">
+        </p-calendar>
+      </div>
+
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="amount">Amount spent</label>
+          <p-inputNumber name="amount"
+            [(ngModel)]="transaction.amountSpent"
+            [min]="0"
+            [max]="transaction.amountSpent > user.accountAmount ? amountSpentCopy : undefined"
+            mode="currency"
+            currency="USD"
+            locale="en-US"
+            [required]="true">
+          </p-inputNumber>
+          <div class="mt-2" *ngIf="transaction.id === 0 && (transaction.amountSpent > user.accountAmount)">
+            <p-message severity="error"
+              text="The transaction amount exceeds the available balance: ${{ user.accountAmount }}">
+            </p-message>
+          </div>
+          <div class="mt-2" *ngIf="transaction.id !== 0 && (transaction.amountSpent >= user.accountAmount)">
+            <p-message severity="warn"
+              text="The transaction amount can only be decreased. Available balance: ${{ user.accountAmount }}">
+            </p-message>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialog__footer">
+        <button pButton label="Save" name="Save"
+          icon="pi pi-check"
+          class="p-button-primary"
+          (click)="saveTransaction()"
+          [disabled]="transactionForm.invalid || (transaction.id === 0 && (transaction.amountSpent > user.accountAmount))">
+        </button>
+        <p-button label="Cancel" name="Cancel"
+          icon="pi pi-times"
+          styleClass="p-button-outlined"
+          (click)="closeTransactionDialog()">
+        </p-button>
+      </div>
+
+    </form>
+  </p-dialog>
+
+  <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+</section>

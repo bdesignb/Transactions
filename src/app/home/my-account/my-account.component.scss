@@ -1,0 +1,20 @@
+:host ::ng-deep {
+  .p-dialog .p-dialog-footer {
+    text-align: left;
+  }
+
+  .p-button {
+    padding: 1rem 1.25rem;
+  }
+}
+
+
+.success-tag {
+  background: #22C55E;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.4rem;
+  border-radius: 6px;
+  font-size: 19px;
+}
